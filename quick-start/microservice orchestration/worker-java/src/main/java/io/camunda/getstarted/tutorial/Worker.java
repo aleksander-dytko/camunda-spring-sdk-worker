@@ -15,17 +15,18 @@ public class Worker {
   public static void main(String[] args) {
     SpringApplication.run(Worker.class, args);
   }
-  
-  @JobWorker(type = "orchestrate-something")
-  public Map<String, Object> orchestrateSomething(final ActivatedJob job) {
 
-      // Do the business logic
-      System.out.println("Yeah, now you can orchestrate something :-) You could use data from the process variables: " + job.getVariables());
+    @JobWorker(type = "transport")
+    public Map<String, Object> transport(final ActivatedJob job) {
 
-      // Probably add some process variables
-      HashMap<String, Object> variables = new HashMap<>();
-      variables.put("resultValue1", 42);
-      return variables;
-  }
+        // Do the business logic
+        System.out.println("Working on the process instance: " +job.getProcessInstanceKey() + " with process variables: " + job.getVariables());
+
+        // Add some process variables
+        HashMap<String, Object> variables = new HashMap<>();
+        variables.put("reservationNumber", 1);
+        System.out.println("Added variables to the process instance: " + variables);
+        return variables;
+    }
 
 }
